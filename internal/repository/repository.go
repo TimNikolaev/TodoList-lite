@@ -8,7 +8,7 @@ import (
 
 const (
 	usersTable      = "users"
-	todoTaskTable   = "todo_task"
+	todoTaskTable   = "todo_tasks"
 	usersTasksTable = "users_tasks"
 )
 

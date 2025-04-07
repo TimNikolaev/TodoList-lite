@@ -8,6 +8,6 @@ type User struct {
 }
 
 type UserRepository interface {
-	CreateUser(user User) (int, error)
-	GetUser(email, password string) (User, error)
+	CreateUser(user User) (int, error)            //done
+	GetUser(email, password string) (User, error) //done
 }

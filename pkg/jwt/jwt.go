@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -36,6 +37,16 @@ func (j *JWT) Parse(accessToken string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	id := token.Claims.(jwt.MapClaims)["id"]
-	return id.(int), err
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return 0, fmt.Errorf("invalid token claims")
+	}
+
+	floatID, ok := claims["id"].(float64)
+	if !ok {
+		return 0, fmt.Errorf("id is not a number")
+	}
+
+	return int(floatID), nil
+
 }

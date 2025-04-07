@@ -2,22 +2,22 @@ package service
 
 import "todo-std"
 
-func (s *Service) Create(userID int, item todo.Task) (int, error) {
-	return 0, nil
+func (s *Service) CreateTask(userID int, item todo.Task) (int, error) {
+	return s.taskRepository.Create(userID, item)
 }
 
-func (s *Service) GetAll(userID int) ([]todo.Task, error) {
+func (s *Service) GetAllTasks(userID int) ([]todo.Task, error) {
 	return nil, nil
 }
 
-func (s *Service) GetByID(userID, taskID int) (todo.Task, error) {
+func (s *Service) GetTaskByID(userID, taskID int) (todo.Task, error) {
 	return todo.Task{}, nil
 }
 
-func (s *Service) Delete(userID, taskID int) error {
+func (s *Service) DeleteTask(userID, taskID int) error {
 	return nil
 }
 
-func (s *Service) Update(userID, taskID int, input todo.Task) error {
+func (s *Service) UpdateTask(userID, taskID int, input todo.Task) error {
 	return nil
 }
