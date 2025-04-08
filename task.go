@@ -7,10 +7,16 @@ type Task struct {
 	Done        bool   `json:"done" db:"done"`
 }
 
+type UpdateTaskInput struct {
+	Title       *string `json:"title"`
+	Description *string `json:"description"`
+	Done        *bool   `json:"done"`
+}
+
 type TaskRepository interface {
 	Create(userID int, item Task) (int, error) //done
 	GetAll(userID int) ([]Task, error)
 	GetByID(userID, taskID int) (Task, error)
 	Delete(userID, taskID int) error
-	Update(userID, taskID int, input Task) error
+	Update(userID, taskID int, input UpdateTaskInput) error
 }
