@@ -1,4 +1,13 @@
 services:
+  todo-std:
+    build: ./
+    command: ./todo-std
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
   db:
     restart: always
     image: postgres:latest
