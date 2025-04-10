@@ -22,13 +22,13 @@ func (h *Handler) InitRouts() *gin.Engine {
 		auth.POST("/sign-up", h.signUp)
 		auth.POST("/sign-in", h.signIn)
 	}
-	task := router.Group("/task", h.userIdentity)
+	tasks := router.Group("/tasks", h.userIdentity)
 	{
-		task.POST("/", h.createTask)
-		task.GET("/:id", h.getTaskById)
-		task.GET("/", h.getAllTasks)
-		task.PUT("/:id", h.updateTask)
-		task.DELETE("/:id", h.deleteTask)
+		tasks.POST("/", h.createTask)
+		tasks.GET("/:id", h.getTaskById)
+		tasks.GET("/", h.getAllTasks)
+		tasks.PUT("/:id", h.updateTask)
+		tasks.DELETE("/:id", h.deleteTask)
 	}
 
 	return router

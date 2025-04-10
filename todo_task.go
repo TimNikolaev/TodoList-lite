@@ -14,8 +14,8 @@ type UpdateTaskInput struct {
 }
 
 type TaskRepository interface {
-	Create(userID int, item Task) (int, error) //done
-	GetAll(userID int) ([]Task, error)
+	Create(userID int, item Task) (int, error)
+	GetAll(userID int, status string) ([]Task, error)
 	GetByID(userID, taskID int) (Task, error)
 	Delete(userID, taskID int) error
 	Update(userID, taskID int, input UpdateTaskInput) error

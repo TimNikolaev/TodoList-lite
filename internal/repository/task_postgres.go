@@ -40,10 +40,21 @@ func (r *TaskPostgres) Create(userID int, task todo.Task) (int, error) {
 	return taskID, tx.Commit()
 }
 
-func (r *TaskPostgres) GetAll(userID int) ([]todo.Task, error) {
+func (r *TaskPostgres) GetAll(userID int, status string) ([]todo.Task, error) {
 	var tasks []todo.Task
 
-	query := fmt.Sprintf("SELECT t.id, t.title, t.description, t.done FROM %s t INNER JOIN %s ut on t.id = ut.task_id WHERE ut.user_id = $1", todoTaskTable, usersTasksTable)
+	var statusParam string
+
+	switch status {
+	case "true":
+		statusParam = "t.done = true AND ut.user_id = $1"
+	case "false":
+		statusParam = "t.done = false AND ut.user_id = $1"
+	default:
+		statusParam = "ut.user_id = $1"
+	}
+
+	query := fmt.Sprintf("SELECT t.id, t.title, t.description, t.done FROM %s t INNER JOIN %s ut on t.id = ut.task_id WHERE %s", todoTaskTable, usersTasksTable, statusParam)
 
 	err := r.db.Select(&tasks, query, userID)
 

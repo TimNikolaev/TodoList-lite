@@ -6,8 +6,8 @@ func (s *Service) CreateTask(userID int, item todo.Task) (int, error) {
 	return s.taskRepository.Create(userID, item)
 }
 
-func (s *Service) GetAllTasks(userID int) ([]todo.Task, error) {
-	return s.taskRepository.GetAll(userID)
+func (s *Service) GetAllTasks(userID int, status string) ([]todo.Task, error) {
+	return s.taskRepository.GetAll(userID, status)
 }
 
 func (s *Service) GetTaskByID(userID, taskID int) (todo.Task, error) {

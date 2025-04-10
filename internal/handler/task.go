@@ -41,7 +41,9 @@ func (h *Handler) getAllTasks(c *gin.Context) {
 		return
 	}
 
-	tasks, err := h.service.GetAllTasks(userID)
+	status := c.Query("status")
+
+	tasks, err := h.service.GetAllTasks(userID, status)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
