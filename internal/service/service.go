@@ -3,6 +3,7 @@ package service
 import (
 	"todo-std"
 	"todo-std/configs"
+	"todo-std/internal/repository"
 )
 
 type Service struct {
@@ -11,10 +12,10 @@ type Service struct {
 	Config         *configs.Config
 }
 
-func NewService(taskRepo todo.TaskRepository, userRepo todo.UserRepository, config *configs.Config) *Service {
+func NewService(repo *repository.Repository, config *configs.Config) *Service {
 	return &Service{
-		taskRepository: taskRepo,
-		userRepository: userRepo,
+		taskRepository: repo.TaskRepository,
+		userRepository: repo.UserRepository,
 		Config:         config,
 	}
 }
