@@ -7,15 +7,15 @@ import (
 )
 
 type Service struct {
-	taskRepository todo.TaskRepository
-	userRepository todo.UserRepository
-	Config         *configs.Config
+	todo.TaskRepository
+	todo.UserRepository
+	*configs.Config
 }
 
 func NewService(repo *repository.Repository, config *configs.Config) *Service {
 	return &Service{
-		taskRepository: repo.TaskRepository,
-		userRepository: repo.UserRepository,
+		TaskRepository: repo.TaskRepository,
+		UserRepository: repo.UserRepository,
 		Config:         config,
 	}
 }

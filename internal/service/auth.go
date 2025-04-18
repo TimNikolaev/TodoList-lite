@@ -13,12 +13,12 @@ const (
 
 func (s *Service) CreateUser(user todo.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
-	return s.userRepository.CreateUser(user)
+	return s.UserRepository.CreateUser(user)
 
 }
 
 func (s *Service) GenerateToken(email, password string) (string, error) {
-	user, err := s.userRepository.GetUser(email, generatePasswordHash(password))
+	user, err := s.UserRepository.GetUser(email, generatePasswordHash(password))
 	if err != nil {
 		return "", err
 	}
