@@ -28,7 +28,6 @@ func (h *Handler) createTask(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, map[string]any{"id": taskID})
-
 }
 
 type getAllTasksResponse struct {
@@ -50,7 +49,6 @@ func (h *Handler) getAllTasks(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, getAllTasksResponse{Data: tasks})
-
 }
 
 func (h *Handler) getTaskById(c *gin.Context) {

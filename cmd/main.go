@@ -6,9 +6,10 @@ import (
 	"os/signal"
 	"syscall"
 	"todo-std"
-	"todo-std/configs"
+	"todo-std/internal/config"
 	"todo-std/internal/handler"
 	"todo-std/internal/repository"
+	"todo-std/internal/repository/postgres"
 	"todo-std/internal/service"
 
 	_ "github.com/lib/pq"
@@ -24,8 +25,8 @@ func main() {
 		logrus.Fatalf("error initialization configs: %s", err.Error())
 	}
 
-	config := configs.LoadConfig()
-	db, err := repository.NewPostgresDB(config)
+	config := config.LoadConfig()
+	db, err := postgres.NewPostgresDB(config)
 	if err != nil {
 		logrus.Fatalf("error initialization configs: %s", err.Error())
 	}
