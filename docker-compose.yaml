@@ -7,10 +7,10 @@ services:
     depends_on:
       - db
     environment:
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   db:
-    restart: always
     image: postgres:latest
+    restart: no
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: /data/postgres
