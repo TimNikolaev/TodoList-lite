@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	UsersTable      = "users"
-	TodoTaskTable   = "todo_tasks"
-	UsersTasksTable = "users_tasks"
+	usersTable      = "users"
+	todoTaskTable   = "todo_tasks"
+	usersTasksTable = "users_tasks"
 )
 
 func NewPostgresDB(cfg *config.Config) (*sqlx.DB, error) {

@@ -24,14 +24,14 @@ func (r *TaskPostgres) Create(userID int, task todo.Task) (int, error) {
 	}
 
 	var taskID int
-	createTaskQuery := fmt.Sprintf("INSERT INTO %s (title, description) VALUES ($1, $2) RETURNING id", TodoTaskTable)
+	createTaskQuery := fmt.Sprintf("INSERT INTO %s (title, description) VALUES ($1, $2) RETURNING id", todoTaskTable)
 
 	if err := tx.QueryRow(createTaskQuery, task.Title, task.Description).Scan(&taskID); err != nil {
 		tx.Rollback()
 		return 0, err
 	}
 
-	createUsersTasksQuery := fmt.Sprintf("INSERT INTO %s (user_id, task_id) VALUES ($1, $2)", UsersTasksTable)
+	createUsersTasksQuery := fmt.Sprintf("INSERT INTO %s (user_id, task_id) VALUES ($1, $2)", usersTasksTable)
 	if _, err = tx.Exec(createUsersTasksQuery, userID, taskID); err != nil {
 		tx.Rollback()
 		return 0, err
@@ -54,7 +54,7 @@ func (r *TaskPostgres) GetAll(userID int, status string) ([]todo.Task, error) {
 		statusParam = "ut.user_id = $1"
 	}
 
-	query := fmt.Sprintf("SELECT t.id, t.title, t.description, t.done FROM %s t INNER JOIN %s ut on t.id = ut.task_id WHERE %s", TodoTaskTable, UsersTasksTable, statusParam)
+	query := fmt.Sprintf("SELECT t.id, t.title, t.description, t.done FROM %s t INNER JOIN %s ut on t.id = ut.task_id WHERE %s", todoTaskTable, usersTasksTable, statusParam)
 
 	err := r.db.Select(&tasks, query, userID)
 
@@ -64,7 +64,7 @@ func (r *TaskPostgres) GetAll(userID int, status string) ([]todo.Task, error) {
 func (r *TaskPostgres) GetByID(userID, taskID int) (todo.Task, error) {
 	var task todo.Task
 
-	query := fmt.Sprintf("SELECT t.id, t.title, t.description, t.done FROM %s t INNER JOIN %s ut on t.id = ut.task_id WHERE ut.user_id = $1 AND ut.task_id = $2", TodoTaskTable, UsersTasksTable)
+	query := fmt.Sprintf("SELECT t.id, t.title, t.description, t.done FROM %s t INNER JOIN %s ut on t.id = ut.task_id WHERE ut.user_id = $1 AND ut.task_id = $2", todoTaskTable, usersTasksTable)
 
 	err := r.db.Get(&task, query, userID, taskID)
 
@@ -98,9 +98,9 @@ func (r *TaskPostgres) Update(userID, taskID int, input todo.UpdateTaskInput) er
 
 	query := fmt.Sprintf(
 		"UPDATE %s t SET %s FROM %s ut WHERE t.id = ut.task_id AND ut.task_id = $%d AND ut.user_id = $%d",
-		TodoTaskTable,
+		todoTaskTable,
 		setQuery,
-		UsersTasksTable,
+		usersTasksTable,
 		argID,
 		argID+1,
 	)
@@ -115,7 +115,7 @@ func (r *TaskPostgres) Update(userID, taskID int, input todo.UpdateTaskInput) er
 }
 
 func (r *TaskPostgres) Delete(userID, taskID int) error {
-	query := fmt.Sprintf("DELETE FROM %s t USING %s ut WHERE t.id = ut.task_id AND ut.user_id = $1 AND ut.task_id = $2", TodoTaskTable, UsersTasksTable)
+	query := fmt.Sprintf("DELETE FROM %s t USING %s ut WHERE t.id = ut.task_id AND ut.user_id = $1 AND ut.task_id = $2", todoTaskTable, usersTasksTable)
 
 	_, err := r.db.Exec(query, userID, taskID)
 
